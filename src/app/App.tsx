@@ -60,8 +60,8 @@ function Li({ children, color = C }: { children: React.ReactNode; color?: string
 }
 
 // ─── Browser mockup ──────────────────────────────────────────────
-function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgFit = "contain" }: {
-  label: string; imgSrc?: string; flex?: number; imgPosition?: string; imgFit?: "cover" | "contain";
+function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgFit = "contain", fitToImage = false }: {
+  label: string; imgSrc?: string; flex?: number; imgPosition?: string; imgFit?: "cover" | "contain"; fitToImage?: boolean;
 }) {
   return (
     <div style={{
@@ -69,6 +69,7 @@ function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgF
       borderColor: "rgba(255,255,255,0.1)", borderRadius: 10,
       overflow: "hidden", display: "flex", flexDirection: "column",
       boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
+      alignSelf: fitToImage ? "center" : undefined,
     }}>
       {/* chrome */}
       <div style={{ background: "#060E1B", padding: "7px 12px", display: "flex", alignItems: "center", gap: 6, borderBottom: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
@@ -81,11 +82,11 @@ function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgF
       </div>
       {/* screen */}
       {imgSrc ? (
-        <div style={{ flex: 1, overflow: "hidden", background: "#0B1424" }}>
+        <div style={{ flex: fitToImage ? undefined : 1, overflow: "hidden", background: "#0B1424" }}>
           <ImageWithFallback
             src={imgSrc}
             alt={label}
-            style={{ width: "100%", height: "100%", objectFit: imgFit, objectPosition: imgPosition, display: "block" }}
+            style={{ width: "100%", height: fitToImage ? "auto" : "100%", objectFit: imgFit, objectPosition: imgPosition, display: "block" }}
           />
         </div>
       ) : (
@@ -439,34 +440,31 @@ const slides: { content: React.ReactNode; notes: string }[] = [
     notes: "Страница темы объясняет одну идею, а не перегружает ученика большой лекцией. Рядом есть пример, синтаксис, частые ошибки и переход к практике. Такой формат помогает быстрее понять, как теория превращается в код. Ученик видит всё в одном сценарии.",
     content: (
       <Frame title="Страница темы" thesis="Объяснение, пример и практика находятся в одном сценарии." n={8}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.12fr 0.92fr 0.74fr", gap: 12, height: "100%" }}>
-          <div style={{ position: "relative", minWidth: 0, display: "flex" }}>
-            <BrowserMock label="Страница темы «Многофайловый проект»" imgSrc={imgTopicPage} flex={1} />
-            {[
-              { top: "15%", label: "Теги темы", color: C },
-              { top: "40%", label: "Зачем нужна тема", color: V },
-              { top: "65%", label: "Теория и примеры", color: "#F59E0B" },
-              { top: "85%", label: "Синтаксис / задачи", color: G },
-            ].map(c => (
-              <div key={c.label} style={{ position: "absolute", right: 0, top: c.top, display: "flex", alignItems: "center", transform: "translateY(-50%)" }}>
-                <div style={{ width: 14, height: 1, background: c.color, opacity: 0.35 }} />
-                <div style={{ background: c.color + "20", borderWidth: 1, borderStyle: "solid", borderColor: c.color + "38", borderRadius: "0 6px 6px 0", padding: "3px 8px" }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: c.color, whiteSpace: "nowrap" }}>{c.label}</span>
-                </div>
-              </div>
-            ))}
+        <div style={{ display: "grid", gridTemplateColumns: "1.38fr 1fr", gap: 14, height: "100%" }}>
+          <div style={{ minWidth: 0, display: "flex" }}>
+            <BrowserMock label="Страница темы «Многофайловый проект»" imgSrc={imgTopicPage} flex={1} fitToImage />
           </div>
-          <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+          <div style={{ minWidth: 0, minHeight: 0, display: "grid", gridTemplateRows: "auto minmax(0,1fr) minmax(0,1fr) auto", gap: 10 }}>
+            <div style={{ ...card({ padding: "12px 14px", borderColor: C + "22", background: "rgba(8,20,35,0.78)" }) }}>
+              <div style={{ fontSize: 13.5, fontWeight: 800, color: "#E2E8F0", marginBottom: 9 }}>Что есть внутри темы</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+                {[
+                  { text: "Объяснение", color: C },
+                  { text: "Пример C++", color: V },
+                  { text: "Разбор ошибок", color: "#F59E0B" },
+                  { text: "Мини-проверка", color: G },
+                ].map(item => (
+                  <div key={item.text} style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
+                    <span style={{ fontSize: 12.5, color: "#CBD5E1", whiteSpace: "nowrap" }}>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
             <TopicPreview label="Разбор ошибок" imgSrc={imgTopicErrors} accent="#F59E0B" />
             <TopicPreview label="Мини-проверка" imgSrc={imgTopicCheck} accent={G} />
-          </div>
-          <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 8, justifyContent: "center" }}>
-            <Li color={C}>Одна понятная тема</Li>
-            <Li color={V}>Пример рядом с объяснением</Li>
-            <Li color="#F59E0B">Разбор ошибок внутри темы</Li>
-            <Li color={G}>Мини-проверка перед практикой</Li>
-            <div style={{ ...card({ padding: "9px 11px", borderColor: G + "20", background: G + "07" }) }}>
-              <span style={{ fontSize: 11.2, color: "#64748B", lineHeight: 1.5 }}>Теория не отделена от проверки: ученик сразу видит следующий шаг.</span>
+            <div style={{ ...card({ padding: "8px 11px", borderColor: G + "20", background: G + "07" }) }}>
+              <span style={{ fontSize: 11.2, color: "#64748B", lineHeight: 1.45 }}>Теория не отделена от проверки: следующий шаг виден сразу.</span>
             </div>
           </div>
         </div>
