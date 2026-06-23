@@ -18,7 +18,7 @@ import imgTopicPage  from "@/imports/cropped/______________2026-06-22_211644.png
 import imgTheoryCode from "@/imports/cropped/uchicode-theory-loop-accumulation.png";
 import imgAiBefore   from "@/imports/______________2026-06-22_211727.png";
 import imgAiAfter    from "@/imports/______________2026-06-22_211749.png";
-import imgProfile    from "@/imports/______________2026-06-22_211800.png";
+import imgProfile    from "@/imports/cropped/______________2026-06-22_211800.png";
 import imgQrCode     from "@/imports/uchicode-qr.png";
 
 // ─── Design tokens ───────────────────────────────────────────────
@@ -79,11 +79,11 @@ function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center" }: {
       </div>
       {/* screen */}
       {imgSrc ? (
-        <div style={{ flex: 1, overflow: "hidden", background: "#F4F5F0" }}>
+        <div style={{ flex: 1, overflow: "hidden", background: "#0B1424" }}>
           <ImageWithFallback
             src={imgSrc}
             alt={label}
-            style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: imgPosition, display: "block" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: imgPosition, display: "block" }}
           />
         </div>
       ) : (
