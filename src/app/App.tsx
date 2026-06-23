@@ -454,16 +454,18 @@ const slides: { content: React.ReactNode; notes: string }[] = [
     content: (
       <Frame title="Пример кода внутри темы" thesis="Ученик сразу видит, как идея работает в реальном C++ коде." n={9} accent={V}>
         <div style={{ display: "flex", gap: 18, height: "100%" }}>
-          <div style={{ flex: 1.6, background: "#0F1A2A", borderRadius: 10, overflow: "hidden", borderWidth: 1, borderStyle: "solid", borderColor: "rgba(255,255,255,0.1)", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
+          <div style={{ flex: 1.6, background: "#0F1A2A", borderRadius: 10, overflow: "hidden", borderWidth: 1, borderStyle: "solid", borderColor: "rgba(255,255,255,0.1)", boxShadow: "0 8px 24px rgba(0,0,0,0.4)", display: "flex", flexDirection: "column" }}>
             <div style={{ background: "#0A1019", padding: "7px 14px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ fontSize: 10, color: C, fontFamily: "'JetBrains Mono',monospace", fontWeight: 600 }}>C++</span>
               <span style={{ fontSize: 10, color: "#334155" }}>Цикл while и стоп-значение</span>
             </div>
-            <ImageWithFallback
-              src={imgTheoryCode}
-              alt="Пример кода C++ с циклом while и стоп-значением"
-              style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "top", display: "block", background: "#24262B" }}
-            />
+            <div style={{ flex: 1, minHeight: 0, background: "#24262B" }}>
+              <ImageWithFallback
+                src={imgTheoryCode}
+                alt="Пример кода C++ с циклом while и стоп-значением"
+                style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "top", display: "block" }}
+              />
+            </div>
           </div>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, justifyContent: "center" }}>
             <Li color={C}>Реальный пример в уроке</Li>
