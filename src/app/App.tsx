@@ -58,7 +58,7 @@ function Li({ children, color = C }: { children: React.ReactNode; color?: string
 }
 
 // ─── Browser mockup ──────────────────────────────────────────────
-function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgFit = "cover" }: {
+function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgFit = "contain" }: {
   label: string; imgSrc?: string; flex?: number; imgPosition?: string; imgFit?: "cover" | "contain";
 }) {
   return (
@@ -343,7 +343,7 @@ const slides: { content: React.ReactNode; notes: string }[] = [
     content: (
       <Frame title="Главная страница" thesis="Первый экран показывает, с чего начать путь в C++." n={5}>
         <div style={{ display: "flex", gap: 18, height: "100%" }}>
-          <BrowserMock label="Главная страница" imgSrc={imgHomepage} flex={1.6} imgPosition="top left" imgFit="contain" />
+          <BrowserMock label="Главная страница" imgSrc={imgHomepage} flex={1.6} imgPosition="top left" />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, justifyContent: "center" }}>
             {[
               { t: "Пять шагов до первой задачи", c: C },
