@@ -58,8 +58,8 @@ function Li({ children, color = C }: { children: React.ReactNode; color?: string
 }
 
 // ─── Browser mockup ──────────────────────────────────────────────
-function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center" }: {
-  label: string; imgSrc?: string; flex?: number; imgPosition?: string;
+function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgFit = "cover" }: {
+  label: string; imgSrc?: string; flex?: number; imgPosition?: string; imgFit?: "cover" | "contain";
 }) {
   return (
     <div style={{
@@ -83,7 +83,7 @@ function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center" }: {
           <ImageWithFallback
             src={imgSrc}
             alt={label}
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: imgPosition, display: "block" }}
+            style={{ width: "100%", height: "100%", objectFit: imgFit, objectPosition: imgPosition, display: "block" }}
           />
         </div>
       ) : (
@@ -343,7 +343,7 @@ const slides: { content: React.ReactNode; notes: string }[] = [
     content: (
       <Frame title="Главная страница" thesis="Первый экран показывает, с чего начать путь в C++." n={5}>
         <div style={{ display: "flex", gap: 18, height: "100%" }}>
-          <BrowserMock label="Главная страница" imgSrc={imgHomepage} flex={1.6} imgPosition="top left" />
+          <BrowserMock label="Главная страница" imgSrc={imgHomepage} flex={1.6} imgPosition="top left" imgFit="contain" />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, justifyContent: "center" }}>
             {[
               { t: "Пять шагов до первой задачи", c: C },
