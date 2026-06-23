@@ -60,7 +60,7 @@ function Li({ children, color = C }: { children: React.ReactNode; color?: string
 }
 
 // ─── Browser mockup ──────────────────────────────────────────────
-function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgFit = "contain", fitToImage = false }: {
+function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgFit = "contain", fitToImage = true }: {
   label: string; imgSrc?: string; flex?: number; imgPosition?: string; imgFit?: "cover" | "contain"; fitToImage?: boolean;
 }) {
   return (
@@ -69,7 +69,7 @@ function BrowserMock({ label, imgSrc, flex = 1, imgPosition = "top center", imgF
       borderColor: "rgba(255,255,255,0.1)", borderRadius: 10,
       overflow: "hidden", display: "flex", flexDirection: "column",
       boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
-      alignSelf: fitToImage ? "center" : undefined,
+      alignSelf: fitToImage && imgSrc ? "center" : undefined,
     }}>
       {/* chrome */}
       <div style={{ background: "#060E1B", padding: "7px 12px", display: "flex", alignItems: "center", gap: 6, borderBottom: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
